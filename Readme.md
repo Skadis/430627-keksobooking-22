@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг»
 
 * Студент: [Skadi](https://up.htmlacademy.ru/javascript/22/user/430627).
-* Наставник: `Неизвестно`.
+* Наставник: [Альбина Токарчук](https://up.htmlacademy.ru/javascript/22/user/167491).
 
 ---
 
