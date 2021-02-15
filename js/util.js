@@ -1,4 +1,4 @@
-function checkInterval(min, max) {
+const checkInterval = (min, max) => {
   if (min > max) {
     throw new Error('Начальное значение диапазона больше конечного');
   }
@@ -12,13 +12,13 @@ function checkInterval(min, max) {
   } 
 }
 
-function getRandomIntegerNumber(min, max) {
+const getRandomIntegerNumber = (min, max) => {
   checkInterval(min, max);
 
   return Math.floor((Math.random() * (max - min + 1)) + min);
 }
 
-function getRandomFloatNumber(min, max, decimalPlaces) {
+const getRandomFloatNumber = (min, max, decimalPlaces) => {
   checkInterval(min, max);
 
   if (decimalPlaces < 0 || decimalPlaces > 20) {
