@@ -7,6 +7,8 @@ const FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'condit
 
 
 const createNearOffer = () => {
+  const locationX = getRandomFloatNumber(35.65000, 35.70000, 5);
+  const locationY = getRandomFloatNumber(139.70000, 139.80000, 5);
 
   return {
     author: {
@@ -15,7 +17,7 @@ const createNearOffer = () => {
 
     offer: {
       title: 'Тут будет заголовок объявления',
-      address: `${getRandomFloatNumber(35.65000, 35.70000, 5)}, ${getRandomFloatNumber(139.70000, 139.80000, 5)}`,
+      address: `${locationX}, ${locationY}`,
       price: getRandomIntegerNumber(0, 1000000),
       type: getRandomArrayElement(TYPES),
       rooms: getRandomIntegerNumber(1, 30),
@@ -26,8 +28,8 @@ const createNearOffer = () => {
       description: 'Тут будет описание объявления',
       photos: createUniqueArray(generatePhotoUrl(1, 3)),
       location: {
-        x: getRandomFloatNumber(35.65000, 35.70000, 5),
-        y: getRandomFloatNumber(139.70000, 139.80000, 5),
+        x: locationX,
+        y: locationY,
       },
     },
   }
