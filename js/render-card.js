@@ -36,7 +36,7 @@ const transformType = (type) => {
   return type;
 }
 
-const generateList = (parent, array) => {
+const generateList = (parent, features) => {
   const featuresList = parent.querySelector('.popup__features');
 
   for (let i = featuresList.children.length - 1; i >= 0; i--) {
@@ -45,20 +45,20 @@ const generateList = (parent, array) => {
     item.parentElement.removeChild(item);
   }
 
-  array.forEach((element) => {
+  features.forEach((element) => {
     const featureItem = document.createElement('li');
 
     featuresList.appendChild(featureItem).classList.add('popup__feature', `popup__feature--${element}`);
   });
 }
 
-const generatePhoto = (parent, array) => {
+const generatePhoto = (parent, photosUrl) => {
   const photoList = parent.querySelector('.popup__photos');
   const photoItem = photoList.querySelector('.popup__photo');
 
   photoList.removeChild(photoItem);
 
-  array.forEach((element) => {
+  photosUrl.forEach((element) => {
     const newPhoto = photoItem.cloneNode(true);
 
     photoList.appendChild(newPhoto).src = element;
