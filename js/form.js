@@ -23,8 +23,8 @@ const transformTypeToPrice = (type) => {
 }
 
 const setPrice = () => {
-	houstingPrice.placeholder = transformTypeToPrice(houstingType.value);
-	houstingPrice.min = transformTypeToPrice(houstingType.value);
+  houstingPrice.placeholder = transformTypeToPrice(houstingType.value);
+  houstingPrice.min = transformTypeToPrice(houstingType.value);
 }
 
 setPrice();
