@@ -1,5 +1,6 @@
 import { createManyNearOffers } from './data.js'
 import { renderCard } from './render-card.js'
+import './form.js';
 
 const QUANTITY_OF_OFFERS = 10;
 
