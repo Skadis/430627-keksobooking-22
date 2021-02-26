@@ -4,24 +4,26 @@ const houstingPrice = form.querySelector('#price');
 const checkinSelect = form.querySelector('#timein');
 const checkoutSelect = form.querySelector('#timeout');
 
-const bungalowPrice = 0;
-const flatPrice = 1000;
-const housePrice = 5000;
-const palacePrice = 10000;
+const prices = {
+  bungalow: 0,
+  flat: 1000,
+  house: 5000,
+  palace: 10000,
+}
 
 const transformTypeToPrice = (type) => {
   switch(type) {
     case 'bungalow':
-      type = bungalowPrice
+      type = prices.bungalow
       break;
     case 'flat':
-      type = flatPrice
+      type = prices.flat
       break;
     case 'house':
-      type = housePrice
+      type = prices.house
       break;
     case 'palace':
-      type = palacePrice
+      type = prices.palace
       break;
   }
 
