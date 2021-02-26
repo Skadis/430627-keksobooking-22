@@ -1,21 +1,27 @@
-const houstingType = document.querySelector('#type');
-const houstingPrice = document.querySelector('#price');
-const checkinSelect = document.querySelector('#timein');
-const checkoutSelect = document.querySelector('#timeout');
+const form = document.querySelector('.ad-form');
+const houstingType = form.querySelector('#type');
+const houstingPrice = form.querySelector('#price');
+const checkinSelect = form.querySelector('#timein');
+const checkoutSelect = form.querySelector('#timeout');
+
+const bungalowPrice = 0;
+const flatPrice = 1000;
+const housePrice = 5000;
+const palacePrice = 10000;
 
 const transformTypeToPrice = (type) => {
   switch(type) {
     case 'bungalow':
-      type = 0
+      type = bungalowPrice
       break;
     case 'flat':
-      type = 1000
+      type = flatPrice
       break;
     case 'house':
-      type = 5000
+      type = housePrice
       break;
     case 'palace':
-      type = 10000
+      type = palacePrice
       break;
   }
 
@@ -26,8 +32,6 @@ const setPrice = () => {
   houstingPrice.placeholder = transformTypeToPrice(houstingType.value);
   houstingPrice.min = transformTypeToPrice(houstingType.value);
 }
-
-setPrice();
 
 houstingType.addEventListener('change', function () {
   setPrice();
@@ -40,3 +44,5 @@ checkinSelect.addEventListener('change', function () {
 checkoutSelect.addEventListener('change', function() {
   checkinSelect.value = checkoutSelect.value;
 });
+
+setPrice();
