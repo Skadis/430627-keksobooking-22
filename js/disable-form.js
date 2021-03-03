@@ -11,7 +11,7 @@ const DisableForm = (state) => {
   const filtersFormSelects = filtersForm.querySelectorAll('.map__filter');
   const filtersFormFieldset = filtersForm.querySelector('.map__features');
 
-  if (state === false) {
+  if (!state) {
     adForm.classList.remove('ad-form--disabled');
     filtersForm.classList.remove('map__filters--disabled');
   } else {
@@ -23,5 +23,7 @@ const DisableForm = (state) => {
   setDisabledForElements(filtersFormSelects, state);
   filtersFormFieldset.disabled = state;
 }
+
+DisableForm(true);
 
 export { DisableForm }

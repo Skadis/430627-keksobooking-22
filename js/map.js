@@ -1,3 +1,5 @@
+/* global L:readonly */
+
 import { DisableForm } from './disable-form.js';
 import { renderCard } from './render-card.js';
 import { createManyNearOffers } from './data.js';
@@ -5,12 +7,8 @@ import { createManyNearOffers } from './data.js';
 const startX = 35.6729;
 const startY = 139.7564;
 const QUANTITY_OF_OFFERS = 10;
-
 const nearOffers = createManyNearOffers(QUANTITY_OF_OFFERS);
-
-DisableForm(true);
-
-/* global L:readonly */
+const addressField =  document.querySelector('#address');
 
 const map = L.map('map-canvas')
   .on('load', () => {
@@ -44,21 +42,7 @@ const mainPinMarker = L.marker(
     draggable: true,
     icon: mainPinIcon,
   },
-);
-
-mainPinMarker.addTo(map);
-
-const addressField =  document.querySelector('#address');
-
-addressField.value = `${ startX }, ${ startY }`;
-
-mainPinMarker.on('moveend', (evt) => {
-
-  const { lat, lng } = evt.target.getLatLng()
-
-  addressField.value = `${ lat.toFixed(5) }, ${ lng.toFixed(5) }`;
-
-});
+).addTo(map);
 
 const simplePinIcon = L.icon({
   iconUrl: 'img/pin.svg',
@@ -84,8 +68,18 @@ const addSimplePin = (locationX, locationY, element) => {
     .bindPopup(renderCard(element));
 }
 
+mainPinMarker.on('moveend', (evt) => {
+
+  const { lat, lng } = evt.target.getLatLng()
+
+  addressField.value = `${ lat.toFixed(5) }, ${ lng.toFixed(5) }`;
+
+});
+
 nearOffers.forEach(element => {
   const {x, y} = element.offer.location;
 
   addSimplePin(x, y, element);
 });
+
+addressField.value = `${ startX }, ${ startY }`;
