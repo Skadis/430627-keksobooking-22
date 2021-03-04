@@ -68,12 +68,14 @@ const addSimplePin = (locationX, locationY, element) => {
     .bindPopup(renderCard(element));
 }
 
-mainPinMarker.on('moveend', (evt) => {
+const setAddres = (x, y) => {
+  addressField.value = `${ x }, ${ y }`;
+}
 
+mainPinMarker.on('moveend', (evt) => {
   const { lat, lng } = evt.target.getLatLng()
 
-  addressField.value = `${ lat.toFixed(5) }, ${ lng.toFixed(5) }`;
-
+  setAddres(lat.toFixed(5), lng.toFixed(5));
 });
 
 nearOffers.forEach(element => {
@@ -82,4 +84,5 @@ nearOffers.forEach(element => {
   addSimplePin(x, y, element);
 });
 
-addressField.value = `${ startX }, ${ startY }`;
+DisableForm(true);
+setAddres(startX, startY);

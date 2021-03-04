@@ -24,6 +24,4 @@ const DisableForm = (state) => {
   filtersFormFieldset.disabled = state;
 }
 
-DisableForm(true);
-
 export { DisableForm }
