@@ -1,3 +1,5 @@
+const DECIMAL_PLACES_COUNT = 20;
+
 const checkInterval = (min, max) => {
   if (min > max) {
     throw new Error('Начальное значение диапазона больше конечного');
@@ -21,7 +23,7 @@ const getRandomIntegerNumber = (min, max) => {
 const getRandomFloatNumber = (min, max, decimalPlaces) => {
   checkInterval(min, max);
 
-  if (decimalPlaces < 0 || decimalPlaces > 20) {
+  if (decimalPlaces < 0 || decimalPlaces > DECIMAL_PLACES_COUNT) {
     throw new Error('Неверно введено количество знаков после запятой');
   }
 

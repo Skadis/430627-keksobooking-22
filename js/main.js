@@ -1,2 +1,7 @@
 import './form.js';
-import './map.js';
+import { DisableForm } from './disable-form.js';
+import { initMap } from './map.js';
+
+DisableForm(true);
+
+initMap();
