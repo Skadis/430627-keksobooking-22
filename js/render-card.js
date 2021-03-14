@@ -79,14 +79,13 @@ const insertDataInCard = ({ author, offer }, parent) => {
 }
 
 const renderCard = (cardData) => {
-  const parentBlock = document.querySelector('.map__canvas');
   const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
   const cardElement = cardTemplate.cloneNode(true);
 
   insertDataInCard(cardData, cardElement);
   hideAllEmptyBlocksInCard(cardData, cardElement);
 
-  parentBlock.appendChild(cardElement);
+  return cardElement;
 }
 
 export { renderCard }

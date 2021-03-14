@@ -1,9 +1,7 @@
-import { createManyNearOffers } from './data.js'
-import { renderCard } from './render-card.js'
 import './form.js';
+import { DisableForm } from './disable-form.js';
+import { initMap } from './map.js';
 
-const QUANTITY_OF_OFFERS = 10;
+DisableForm(true);
 
-const nearOffers = createManyNearOffers(QUANTITY_OF_OFFERS);
-
-renderCard(nearOffers[0]);
+initMap();
