@@ -4,10 +4,13 @@ import { DisableForm } from './disable-form.js';
 import { renderCard } from './render-card.js';
 import { createManyNearOffers } from './data.js';
 
-const START_LAT = 35.6729;
-const START_LNG = 139.7564;
 const QUANTITY_OF_OFFERS = 10;
 const addressField =  document.querySelector('#address');
+
+const startCoordinates = {
+  lat: 35.6729,
+  lng: 139.7564,
+};
 
 const mainPinIcon = L.icon({
   iconUrl: 'img/main-pin.svg',
@@ -23,8 +26,8 @@ const simplePinIcon = L.icon({
 
 const mainPinMarker = L.marker(
   {
-    lat: START_LAT,
-    lng: START_LNG,
+    lat: startCoordinates.lat,
+    lng: startCoordinates.lng,
   },
   {
     draggable: true,
@@ -60,12 +63,12 @@ const initMap = () => {
   const map = L.map('map-canvas')
     .on('load', () => {
       DisableForm(false);
-      setAddress(START_LAT, START_LNG);
+      setAddress(startCoordinates.lat, startCoordinates.lng);
     })
 
     .setView({
-      lat: START_LAT,
-      lng: START_LNG,
+      lat: startCoordinates.lat,
+      lng: startCoordinates.lng,
     }, 10);
 
   L.tileLayer(
