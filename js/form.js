@@ -1,3 +1,7 @@
+import { showPopupAlert } from './popup.js';
+import { returnMainPin } from './map.js';
+import { sendData } from './api.js';
+
 const form = document.querySelector('.ad-form');
 const houstingType = form.querySelector('#type');
 const houstingPrice = form.querySelector('#price');
@@ -61,21 +65,49 @@ const changeCapacityOptions = (guestNumber) => {
   });
 };
 
-houstingType.addEventListener('change', function () {
+const setFormSubmit = () => {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    sendData(
+      () => {
+        showPopupAlert('Данные отправлены', 'success');
+        form.reset();
+        returnMainPin();
+      },
+      () => showPopupAlert('Не удалось отправить данные. Попробуйте ещё раз', 'error'),
+      new FormData(evt.target),
+    )
+  });
+}
+
+const setFormReset = () => {
+  const buttonReset = form.querySelector('.ad-form__reset');
+
+  buttonReset.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    form.reset();
+    returnMainPin();
+  })
+};
+
+houstingType.addEventListener('change', () => {
   setPrice();
 });
 
-checkinSelect.addEventListener('change', function () {
+checkinSelect.addEventListener('change', () => {
   checkoutSelect.value = checkinSelect.value;
 });
 
-checkoutSelect.addEventListener('change', function() {
+checkoutSelect.addEventListener('change', () => {
   checkinSelect.value = checkoutSelect.value;
 });
 
-roomsNumber.addEventListener('change', function () {
+roomsNumber.addEventListener('change', () => {
   changeCapacityOptions(roomsNumber.value);
 });
 
 setPrice();
 changeCapacityOptions(roomsNumber.value);
+setFormSubmit();
+setFormReset();
