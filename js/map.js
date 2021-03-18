@@ -103,4 +103,9 @@ const initMap = () => {
   );
 }
 
-export { initMap, returnMainPin };
+const map = {
+  initMap: initMap,
+  returnMainPin: returnMainPin,
+}
+
+export { map }

@@ -1,5 +1,5 @@
 import { showPopupAlert } from './popup.js';
-import { returnMainPin } from './map.js';
+import { map } from './map.js';
 import { sendData } from './api.js';
 
 const form = document.querySelector('.ad-form');
@@ -73,7 +73,7 @@ const setFormSubmit = () => {
       () => {
         showPopupAlert('Данные отправлены', 'success');
         form.reset();
-        returnMainPin();
+        map.returnMainPin();
       },
       () => showPopupAlert('Не удалось отправить данные. Попробуйте ещё раз', 'error'),
       new FormData(evt.target),
@@ -87,7 +87,7 @@ const setFormReset = () => {
   buttonReset.addEventListener('click', (evt) => {
     evt.preventDefault();
     form.reset();
-    returnMainPin();
+    map.returnMainPin();
   })
 };
 
