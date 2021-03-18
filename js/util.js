@@ -1,4 +1,6 @@
+const ALERT_SHOW_TIME = 5000;
 const DECIMAL_PLACES_COUNT = 20;
+const ESCAPE = 'Escape';
 
 const checkInterval = (min, max) => {
   if (min > max) {
@@ -11,7 +13,7 @@ const checkInterval = (min, max) => {
 
   if (min < 0) {
     throw new Error('Начальное значение диапазона не может являться отрицательным числом');
-  } 
+  }
 }
 
 const getRandomIntegerNumber = (min, max) => {
@@ -59,4 +61,21 @@ const generatePhotoUrl = (firstNumber, lastNumber) =>  {
   return result;
 }
 
-export { getRandomIntegerNumber, getRandomFloatNumber, createUniqueArray, getRandomArrayElement, generatePhotoUrl };
+const isEscEvent = (evt) => {
+  return evt.key === ESCAPE;
+};
+
+const createErrorAlert = (message) => {
+  const alertContainer = document.createElement('div');
+
+  alertContainer.classList.add('error-alert');
+  alertContainer.textContent = message;
+
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, ALERT_SHOW_TIME);
+}
+
+export { getRandomIntegerNumber, getRandomFloatNumber, createUniqueArray, getRandomArrayElement, generatePhotoUrl, isEscEvent, createErrorAlert };

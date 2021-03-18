@@ -2,7 +2,8 @@
 
 import { DisableForm } from './disable-form.js';
 import { renderCard } from './render-card.js';
-import { createManyNearOffers } from './data.js';
+import { getData } from './api.js';
+import { createErrorAlert } from './util.js';
 
 const QUANTITY_OF_OFFERS = 10;
 const addressField =  document.querySelector('#address');
@@ -39,6 +40,11 @@ const setAddress = (x, y) => {
   addressField.value = `${ x }, ${ y }`;
 }
 
+const returnMainPin = () => {
+  mainPinMarker.setLatLng(L.latLng(startCoordinates.lat, startCoordinates.lng));
+  setAddress(startCoordinates.lat, startCoordinates.lng);
+}
+
 const addSimplePin = (map, locationX, locationY, element) => {
 
   const simplePinMarker = L.marker(
@@ -58,7 +64,6 @@ const addSimplePin = (map, locationX, locationY, element) => {
 }
 
 const initMap = () => {
-  const nearOffers = createManyNearOffers(QUANTITY_OF_OFFERS);
 
   const map = L.map('map-canvas')
     .on('load', () => {
@@ -86,11 +91,21 @@ const initMap = () => {
     setAddress(lat.toFixed(5), lng.toFixed(5));
   });
 
-  nearOffers.forEach(element => {
-    const {x, y} = element.offer.location;
+  getData(
+    (offers) => {
+      offers.slice(0, QUANTITY_OF_OFFERS).forEach(element => {
+        const {lat, lng} = element.location;
 
-    addSimplePin(map, x, y, element);
-  });
+        addSimplePin(map, lat, lng, element);
+      });
+    },
+    () => createErrorAlert('Ошибка. Не удалось получить данные'),
+  );
 }
 
-export { initMap };
+const map = {
+  initMap: initMap,
+  returnMainPin: returnMainPin,
+}
+
+export { map }
