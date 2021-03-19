@@ -4,9 +4,13 @@ import { DisableForm } from './disable-form.js';
 import { renderCard } from './render-card.js';
 import { getData } from './api.js';
 import { createErrorAlert } from './util.js';
+import { filterOffers } from './filter.js';
 
 const QUANTITY_OF_OFFERS = 10;
+const DECIMAL_PLACES_COUNT = 5;
+const mapCanvas = L.map('map-canvas');
 const addressField =  document.querySelector('#address');
+const simplePinLayer = L.layerGroup().addTo(mapCanvas);
 
 const startCoordinates = {
   lat: 35.6729,
@@ -45,7 +49,7 @@ const returnMainPin = () => {
   setAddress(startCoordinates.lat, startCoordinates.lng);
 }
 
-const addSimplePin = (map, locationX, locationY, element) => {
+const addSimplePin = (locationX, locationY, element) => {
 
   const simplePinMarker = L.marker(
     {
@@ -59,18 +63,27 @@ const addSimplePin = (map, locationX, locationY, element) => {
   );
 
   simplePinMarker
-    .addTo(map)
+    .addTo(simplePinLayer)
     .bindPopup(renderCard(element));
 }
 
+const removeSimplePin = () => {
+  simplePinLayer.clearLayers();
+};
+
+const addDataToMap = (offers) => {
+  offers.slice(0, QUANTITY_OF_OFFERS).forEach(element => {
+    const {lat, lng} = element.location;
+
+    addSimplePin(lat, lng, element);
+  });
+}
+
 const initMap = () => {
-
-  const map = L.map('map-canvas')
-    .on('load', () => {
-      DisableForm(false);
-      setAddress(startCoordinates.lat, startCoordinates.lng);
-    })
-
+  mapCanvas.on('load', () => {
+    DisableForm(false);
+    setAddress(startCoordinates.lat, startCoordinates.lng);
+  })
     .setView({
       lat: startCoordinates.lat,
       lng: startCoordinates.lng,
@@ -81,26 +94,24 @@ const initMap = () => {
     {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     },
-  ).addTo(map);
+  ).addTo(mapCanvas);
 
-  mainPinMarker.addTo(map);
+  mainPinMarker.addTo(mapCanvas);
 
   mainPinMarker.on('moveend', (evt) => {
     const { lat, lng } = evt.target.getLatLng()
 
-    setAddress(lat.toFixed(5), lng.toFixed(5));
+    setAddress(lat.toFixed(DECIMAL_PLACES_COUNT), lng.toFixed(DECIMAL_PLACES_COUNT));
   });
 
   getData(
     (offers) => {
-      offers.slice(0, QUANTITY_OF_OFFERS).forEach(element => {
-        const {lat, lng} = element.location;
-
-        addSimplePin(map, lat, lng, element);
-      });
+      addDataToMap(offers);
     },
     () => createErrorAlert('Ошибка. Не удалось получить данные'),
   );
+
+  filterOffers(removeSimplePin, addDataToMap);
 }
 
 const map = {
@@ -108,4 +119,4 @@ const map = {
   returnMainPin: returnMainPin,
 }
 
-export { map }
+export { map };
