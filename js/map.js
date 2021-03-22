@@ -49,6 +49,15 @@ const returnMainPin = () => {
   setAddress(startCoordinates.lat, startCoordinates.lng);
 }
 
+const returnSimplePin = () => {
+  getData(
+    (offers) => {
+      addDataToMap(offers);
+    },
+    () => createErrorAlert('Ошибка. Не удалось получить данные'),
+  );
+}
+
 const addSimplePin = (locationX, locationY, element) => {
 
   const simplePinMarker = L.marker(
@@ -117,6 +126,7 @@ const initMap = () => {
 const map = {
   initMap: initMap,
   returnMainPin: returnMainPin,
+  returnSimplePin: returnSimplePin,
 }
 
 export { map };

@@ -3,6 +3,7 @@ import { map } from './map.js';
 import { sendData } from './api.js';
 
 const form = document.querySelector('.ad-form');
+const filterForm = document.querySelector('.map__filters');
 const houstingType = form.querySelector('#type');
 const houstingPrice = form.querySelector('#price');
 const checkinSelect = form.querySelector('#timein');
@@ -87,7 +88,9 @@ const setFormReset = () => {
   buttonReset.addEventListener('click', (evt) => {
     evt.preventDefault();
     form.reset();
+    filterForm.reset();
     map.returnMainPin();
+    map.returnSimplePin();
   })
 };
 
