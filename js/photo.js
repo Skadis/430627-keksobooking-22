@@ -10,35 +10,37 @@ const imageSize = {
   height: 70,
 }
 
-const setImageInPreview = (fileChooser, preview, isImg) => {
-  fileChooser.addEventListener('change', () => {
-    const file = fileChooser.files[0];
-    const fileName = file.name.toLowerCase();
+const setImageInPreview = (fileChooser, preview) => {
+  const file = fileChooser.files[0];
+  const fileName = file.name.toLowerCase();
 
-    const matches = FILE_TYPES.some((it) => {
-      return fileName.endsWith(it);
+  const matches = FILE_TYPES.some((it) => {
+    return fileName.endsWith(it);
+  });
+
+  if (matches) {
+    const reader = new FileReader();
+
+    reader.addEventListener('load', () => {
+      if (preview.tagName === 'IMG') {
+        preview.src = reader.result;
+        preview.width = imageSize.width;
+        preview.height = imageSize.height;
+        preview.style.margin = '0  -15px';
+      } else {
+        preview.style.backgroundImage = `url(${reader.result})`;
+        preview.style.backgroundSize = 'cover';
+      }
     });
 
-    if (matches) {
-      const reader = new FileReader();
+    reader.readAsDataURL(file);
+  }
+};
 
+fileChooserAvatar.addEventListener('change', () => {
+  setImageInPreview(fileChooserAvatar, previewAvatar);
+});
 
-      reader.addEventListener('load', () => {
-        if (isImg) {
-          preview.src = reader.result;
-          preview.width = imageSize.width;
-          preview.height = imageSize.height;
-          preview.style.margin = '0  -15px';
-        } else {
-          preview.style.backgroundImage = `url(${reader.result})`;
-          preview.style.backgroundSize = 'cover';
-        }
-      });
-
-      reader.readAsDataURL(file);
-    }
-  });
-}
-
-setImageInPreview(fileChooserAvatar, previewAvatar, true);
-setImageInPreview(fileChooserImages, previewImages, false);
+fileChooserImages.addEventListener('change', () => {
+  setImageInPreview(fileChooserImages, previewImages);
+});

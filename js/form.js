@@ -44,6 +44,13 @@ const transformTypeToPrice = (type) => {
   return type;
 }
 
+const resetForm = () => {
+  form.reset();
+  filterForm.reset();
+  map.returnMainPin();
+  map.setSimplePin();
+}
+
 const setPrice = () => {
   houstingPrice.placeholder = transformTypeToPrice(houstingType.value);
   houstingPrice.min = transformTypeToPrice(houstingType.value);
@@ -73,8 +80,7 @@ const setFormSubmit = () => {
     sendData(
       () => {
         showPopupAlert('Данные отправлены', 'success');
-        form.reset();
-        map.returnMainPin();
+        resetForm();
       },
       () => showPopupAlert('Не удалось отправить данные. Попробуйте ещё раз', 'error'),
       new FormData(evt.target),
@@ -87,10 +93,7 @@ const setFormReset = () => {
 
   buttonReset.addEventListener('click', (evt) => {
     evt.preventDefault();
-    form.reset();
-    filterForm.reset();
-    map.returnMainPin();
-    map.returnSimplePin();
+    resetForm();
   })
 };
 

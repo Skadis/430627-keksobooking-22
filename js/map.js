@@ -49,7 +49,7 @@ const returnMainPin = () => {
   setAddress(startCoordinates.lat, startCoordinates.lng);
 }
 
-const returnSimplePin = () => {
+const setSimplePin = () => {
   getData(
     (offers) => {
       addDataToMap(offers);
@@ -113,12 +113,7 @@ const initMap = () => {
     setAddress(lat.toFixed(DECIMAL_PLACES_COUNT), lng.toFixed(DECIMAL_PLACES_COUNT));
   });
 
-  getData(
-    (offers) => {
-      addDataToMap(offers);
-    },
-    () => createErrorAlert('Ошибка. Не удалось получить данные'),
-  );
+  setSimplePin();
 
   filterOffers(removeSimplePin, addDataToMap);
 }
@@ -126,7 +121,7 @@ const initMap = () => {
 const map = {
   initMap: initMap,
   returnMainPin: returnMainPin,
-  returnSimplePin: returnSimplePin,
+  setSimplePin: setSimplePin,
 }
 
 export { map };
