@@ -1,6 +1,7 @@
 import { showPopupAlert } from './popup.js';
 import { map } from './map.js';
 import { sendData } from './api.js';
+import { preview } from './preview.js'
 
 const form = document.querySelector('.ad-form');
 const filterForm = document.querySelector('.map__filters');
@@ -10,6 +11,10 @@ const checkinSelect = form.querySelector('#timein');
 const checkoutSelect = form.querySelector('#timeout');
 const roomsNumber = form.querySelector('#room_number');
 const capacity =  form.querySelector('#capacity');
+const fileChooserAvatar = form.querySelector('#avatar');
+const previewAvatar = form.querySelector('.ad-form-header__preview img');
+const fileChooserImages = form.querySelector('#images');
+const previewImages = form.querySelector('.ad-form__photo');
 
 const prices = {
   bungalow: 0,
@@ -49,6 +54,8 @@ const resetForm = () => {
   filterForm.reset();
   map.returnMainPin();
   map.setSimplePin();
+  preview.resetPreview(previewAvatar);
+  preview.resetPreview(previewImages);
 }
 
 const setPrice = () => {
@@ -111,6 +118,14 @@ checkoutSelect.addEventListener('change', () => {
 
 roomsNumber.addEventListener('change', () => {
   changeCapacityOptions(roomsNumber.value);
+});
+
+fileChooserAvatar.addEventListener('change', () => {
+  preview.setImageInPreview(event.target, previewAvatar);
+});
+
+fileChooserImages.addEventListener('change', () => {
+  preview.setImageInPreview(event.target, previewImages);
 });
 
 setPrice();

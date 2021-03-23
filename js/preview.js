@@ -1,11 +1,11 @@
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
-const fileChooserAvatar = document.querySelector('#avatar');
-const previewAvatar = document.querySelector('.ad-form-header__preview img');
-const fileChooserImages = document.querySelector('#images');
-const previewImages = document.querySelector('.ad-form__photo');
+const startImageSize = {
+  width: 40,
+  height: 44,
+}
 
-const imageSize = {
+const newImageSize = {
   width: 70,
   height: 70,
 }
@@ -24,8 +24,8 @@ const setImageInPreview = (fileChooser, preview) => {
     reader.addEventListener('load', () => {
       if (preview.tagName === 'IMG') {
         preview.src = reader.result;
-        preview.width = imageSize.width;
-        preview.height = imageSize.height;
+        preview.width = newImageSize.width;
+        preview.height = newImageSize.height;
         preview.style.margin = '0  -15px';
       } else {
         preview.style.backgroundImage = `url(${reader.result})`;
@@ -37,10 +37,20 @@ const setImageInPreview = (fileChooser, preview) => {
   }
 };
 
-fileChooserAvatar.addEventListener('change', () => {
-  setImageInPreview(fileChooserAvatar, previewAvatar);
-});
+const resetPreview = (preview) => {
+  if (preview.tagName === 'IMG') {
+    preview.src = 'img/muffin-grey.svg';
+    preview.width = startImageSize.width;
+    preview.height = startImageSize.height;
+    preview.style.margin = '0';
+  } else {
+    preview.style.backgroundImage = '';
+  }
+};
 
-fileChooserImages.addEventListener('change', () => {
-  setImageInPreview(fileChooserImages, previewImages);
-});
+const preview = {
+  setImageInPreview: setImageInPreview,
+  resetPreview: resetPreview,
+}
+
+export { preview }
