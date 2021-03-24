@@ -120,11 +120,11 @@ roomsNumber.addEventListener('change', () => {
   changeCapacityOptions(roomsNumber.value);
 });
 
-fileChooserAvatar.addEventListener('change', () => {
+fileChooserAvatar.addEventListener('change', (event) => {
   preview.setImageInPreview(event.target, previewAvatar);
 });
 
-fileChooserImages.addEventListener('change', () => {
+fileChooserImages.addEventListener('change', (event) => {
   preview.setImageInPreview(event.target, previewImages);
 });
 
