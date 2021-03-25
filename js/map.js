@@ -91,6 +91,14 @@ const addDataToMap = (offers) => {
   });
 }
 
+const addAllDataToMap = (offers) => {
+  offers.forEach(element => {
+    const {lat, lng} = element.location;
+
+    addSimplePin(lat, lng, element);
+  });
+}
+
 const initMap = () => {
   mapCanvas.on('load', () => {
     disableForm(false);
@@ -118,7 +126,7 @@ const initMap = () => {
 
   setSimplePin();
 
-  filterOffers(removeSimplePin, addDataToMap, QUANTITY_OF_OFFERS);
+  filterOffers(removeSimplePin, addAllDataToMap, QUANTITY_OF_OFFERS);
 }
 
 export { initMap, returnMainPin,  setSimplePin };
