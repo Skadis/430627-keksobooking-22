@@ -1,7 +1,7 @@
 import { showPopupAlert } from './popup.js';
-import { map } from './map.js';
+import { returnMainPin,  setSimplePin } from './map.js';
 import { sendData } from './api.js';
-import { preview } from './preview.js'
+import { setImageInPreview, resetPreview } from './preview.js'
 
 const form = document.querySelector('.ad-form');
 const filterForm = document.querySelector('.map__filters');
@@ -52,10 +52,10 @@ const transformTypeToPrice = (type) => {
 const resetForm = () => {
   form.reset();
   filterForm.reset();
-  map.returnMainPin();
-  map.setSimplePin();
-  preview.resetPreview(previewAvatar);
-  preview.resetPreview(previewImages);
+  returnMainPin();
+  setSimplePin();
+  resetPreview(previewAvatar);
+  resetPreview(previewImages);
 }
 
 const setPrice = () => {
@@ -121,11 +121,11 @@ roomsNumber.addEventListener('change', () => {
 });
 
 fileChooserAvatar.addEventListener('change', (event) => {
-  preview.setImageInPreview(event.target, previewAvatar);
+  setImageInPreview(event.target, previewAvatar);
 });
 
 fileChooserImages.addEventListener('change', (event) => {
-  preview.setImageInPreview(event.target, previewImages);
+  setImageInPreview(event.target, previewImages);
 });
 
 setPrice();

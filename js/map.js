@@ -1,6 +1,6 @@
 /* global L:readonly */
 
-import { DisableForm } from './disable-form.js';
+import { disableForm } from './disable-form.js';
 import { renderCard } from './render-card.js';
 import { getData } from './api.js';
 import { createErrorAlert } from './util.js';
@@ -8,6 +8,9 @@ import { filterOffers } from './filter.js';
 
 const QUANTITY_OF_OFFERS = 10;
 const DECIMAL_PLACES_COUNT = 5;
+const MAP_IMAGES_URL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+const MAP_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+const MAP_ZOOM = 10;
 const mapCanvas = L.map('map-canvas');
 const addressField =  document.querySelector('#address');
 const simplePinLayer = L.layerGroup().addTo(mapCanvas);
@@ -90,24 +93,24 @@ const addDataToMap = (offers) => {
 
 const initMap = () => {
   mapCanvas.on('load', () => {
-    DisableForm(false);
+    disableForm(false);
     setAddress(startCoordinates.lat, startCoordinates.lng);
   })
     .setView({
       lat: startCoordinates.lat,
       lng: startCoordinates.lng,
-    }, 10);
+    }, MAP_ZOOM);
 
   L.tileLayer(
-    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    MAP_IMAGES_URL,
     {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      attribution: MAP_ATTRIBUTION,
     },
   ).addTo(mapCanvas);
 
   mainPinMarker.addTo(mapCanvas);
 
-  mainPinMarker.on('moveend', (evt) => {
+  mainPinMarker.on('move', (evt) => {
     const { lat, lng } = evt.target.getLatLng()
 
     setAddress(lat.toFixed(DECIMAL_PLACES_COUNT), lng.toFixed(DECIMAL_PLACES_COUNT));
@@ -115,13 +118,7 @@ const initMap = () => {
 
   setSimplePin();
 
-  filterOffers(removeSimplePin, addDataToMap);
+  filterOffers(removeSimplePin, addDataToMap, QUANTITY_OF_OFFERS);
 }
 
-const map = {
-  initMap: initMap,
-  returnMainPin: returnMainPin,
-  setSimplePin: setSimplePin,
-}
-
-export { map };
+export { initMap, returnMainPin,  setSimplePin };

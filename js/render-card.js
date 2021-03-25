@@ -1,5 +1,9 @@
+const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
+
 const hideEmptyBlock = (element, block, parent) => {
-  if (element === '' || element === null || element === []) parent.removeChild(parent.querySelector(block));
+  if (element === '' || element === null || element === []) {
+    parent.removeChild(parent.querySelector(block));
+  }
 }
 
 const hideAllEmptyBlocksInCard = ({ author, offer }, parent) => {
@@ -39,11 +43,7 @@ const transformType = (type) => {
 const generateList = (parent, features) => {
   const featuresList = parent.querySelector('.popup__features');
 
-  for (let i = featuresList.children.length - 1; i >= 0; i--) {
-    const item = featuresList.children[i];
-
-    item.parentElement.removeChild(item);
-  }
+  featuresList.innerHTML = '';
 
   features.forEach((element) => {
     const featureItem = document.createElement('li');
@@ -79,7 +79,6 @@ const insertDataInCard = ({ author, offer }, parent) => {
 }
 
 const renderCard = (cardData) => {
-  const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
   const cardElement = cardTemplate.cloneNode(true);
 
   insertDataInCard(cardData, cardElement);

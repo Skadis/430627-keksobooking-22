@@ -59,16 +59,33 @@ const filterByFeatures = ({offer}) => {
   });
 }
 
+const filterAllOffers = (offers, quantity) => {
+  const filteredOffers = [];
+
+  for (let offer of offers) {
+
+    if (filteredOffers.length === quantity) {
+      return filteredOffers;
+    }
+
+    if (
+      filterByTypeHouse(offer, filterHoustingType.value) && filterByPrice(offer, filterHoustingPrice.value) && filterByRoom(offer, filterHoustingRoom.value) && filterByGuest(offer, filterHoustingGuest.value) && filterByFeatures(offer)
+    ) {
+      filteredOffers.push(offer);
+    }
+  }
+
+  return filteredOffers;
+}
+
 const filterOffers = (removePin, addPin, quantity) => {
   getData(
     (offers) => {
       filterForm.addEventListener('change', _.debounce( () => {
         removePin();
 
-        addPin( 
-          offers.slice(0, quantity).filter((offer) => {
-            return filterByTypeHouse(offer, filterHoustingType.value) && filterByPrice(offer, filterHoustingPrice.value) && filterByRoom(offer, filterHoustingRoom.value) && filterByGuest(offer, filterHoustingGuest.value) && filterByFeatures(offer);
-          }),
+        addPin(
+          filterAllOffers(offers, quantity),
         );
       }, RERENDER_DELAY));
     },

@@ -48,9 +48,4 @@ const resetPreview = (preview) => {
   }
 };
 
-const preview = {
-  setImageInPreview: setImageInPreview,
-  resetPreview: resetPreview,
-}
-
-export { preview }
+export { setImageInPreview, resetPreview }
